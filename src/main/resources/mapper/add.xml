@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.ContactDao">
+    <resultMap id="BaseResultMap" type="com.example.demo.Contact">
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+    </resultMap>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select name,address,phone
+        from tb_list
+    </select>
+    <delete id="delete" parameterType="java.lang.Integer">
+    delete from tb_list
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <insert id="insert" parameterType="com.example.demo.Contact">
+        insert into tb_list
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="count != null">
+                phone,
+            </if>
+            <if test="id != null">
+                id,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shoppingId != null">
+                #{name,jdbcType=INTEGER},
+            </if>
+            <if test="orderId != null">
+                #{address,jdbcType=INTEGER},
+            </if>
+            <if test="count != null">
+                #{phone,jdbcType=INTEGER},
+            </if>
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.example.demo.Contact">
+        update tb_list
+        <set>
+            <if test="count != null">
+                address = #{address,jdbcType=INTEGER},
+            </if>
+            <if test="ownName != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="ownName != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+
+        </set>
+        where name = #{name,jdbcType=INTEGER}
+    </update>
+</mapper>
